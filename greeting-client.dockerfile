@@ -2,15 +2,13 @@
 FROM golang:1.16.0 AS development
 WORKDIR $GOPATH/src/
 RUN go env -w GOPROXY=https://goproxy.cn,direct
-RUN git clone https://github.com/invictus555/greeting-server.git
+RUN git clone https://github.com/invictus555/greeting-client.git
 
 # 切换源码目录下执行编译流程
-WORKDIR greeting-server
-RUN go build -o greeting-server main.go serverimpl.go
+WORKDIR greeting-client
+RUN go build -o greeting-client main.go
 
 # 第二阶段的构建用于打包运行镜像
 FROM ubuntu:latest AS production
 WORKDIR /usr/local/bin
-COPY --from=development /go/src/greeting-server/greeting-server .
-EXPOSE 8080
-ENTRYPOINT ["/usr/local/bin/greeting-server"]
+COPY --from=development /go/src/greeting-client/greeting-client .
