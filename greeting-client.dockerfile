@@ -12,3 +12,4 @@ RUN go build -o greeting-client main.go
 FROM ubuntu:latest AS production
 WORKDIR /usr/local/bin
 COPY --from=development /go/src/greeting-client/greeting-client .
+ENTRYPOINT [ "/usr/local/bin/greeting-client" ]

@@ -12,5 +12,4 @@ RUN go build -o greeting-server main.go serverimpl.go
 FROM ubuntu:latest AS production
 WORKDIR /usr/local/bin
 COPY --from=development /go/src/greeting-server/greeting-server .
-EXPOSE 8080
 ENTRYPOINT ["/usr/local/bin/greeting-server"]
